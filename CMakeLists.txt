@@ -57,6 +57,11 @@ add_library(libyuv_config INTERFACE)
 target_include_directories(libyuv_config INTERFACE include)
 target_compile_definitions(libyuv_config INTERFACE
   CHROMIUM LIBYUV_DISABLE_LSX LIBYUV_DISABLE_LASX)
+if(APPLE)
+  # No SME code is built for Apple targets (see libyuv_sme below), so don't
+  # call it; gn sets this for iOS too.
+  target_compile_definitions(libyuv_config INTERFACE LIBYUV_DISABLE_SME)
+endif()
 target_link_libraries(libyuv PUBLIC libyuv_config)
 # Enables FMA vectorization for NEON.
 target_compile_options(libyuv PRIVATE -ffp-contract=fast)

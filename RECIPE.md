@@ -35,6 +35,10 @@ git rm -q Android.bp Android.mk BUILD.bazel BUILD.gn CMakeLists.txt \
   `libyuv_sme` objects, `libyuv_config`'s defines, and MJPEG support through a
   `libjpeg` target (libjpeg_turbo-min) unless `LIBYUV_DISABLE_JPEG` is set.
   The LoongArch (lsx/lasx) targets are left out.
+- **Apple** (commit "Disable SME on Apple targets"): `libyuv_sme` is built
+  only for Android/Linux arm64, so for Apple targets `libyuv_config` also
+  defines `LIBYUV_DISABLE_SME` (as gn does for iOS) so the SME paths aren't
+  called.
 
 ## Updating to a new upstream revision
 
