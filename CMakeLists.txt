@@ -23,12 +23,9 @@ add_library(libyuv STATIC
   source/convert_argb.cc
   source/convert_from.cc
   source/convert_from_argb.cc
-  source/convert_jpeg.cc
   source/convert_to_argb.cc
   source/convert_to_i420.cc
   source/cpu_id.cc
-  source/mjpeg_decoder.cc
-  source/mjpeg_validate.cc
   source/planar_functions.cc
   source/rotate.cc
   source/rotate_any.cc
@@ -66,6 +63,12 @@ target_link_libraries(libyuv PUBLIC libyuv_config)
 # Enables FMA vectorization for NEON.
 target_compile_options(libyuv PRIVATE -ffp-contract=fast)
 if(NOT LIBYUV_DISABLE_JPEG)
+  # (These compile to nothing without HAVE_JPEG.)
+  target_sources(libyuv PRIVATE
+    source/convert_jpeg.cc
+    source/mjpeg_decoder.cc
+    source/mjpeg_validate.cc
+  )
   target_compile_definitions(libyuv PRIVATE HAVE_JPEG)
   target_link_libraries(libyuv PRIVATE libjpeg)
 endif()

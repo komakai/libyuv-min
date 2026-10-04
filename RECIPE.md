@@ -33,7 +33,9 @@ git rm -q Android.bp Android.mk BUILD.bazel BUILD.gn CMakeLists.txt \
   with Chromium's BUILD.gn targets: `libyuv` (`libyuv_internal`) plus the
   `libyuv_neon` (`-march=armv8-a+dotprod+i8mm` on arm64), `libyuv_sve` and
   `libyuv_sme` objects, `libyuv_config`'s defines, and MJPEG support through a
-  `libjpeg` target (libjpeg_turbo-min) unless `LIBYUV_DISABLE_JPEG` is set.
+  `libjpeg` target (libjpeg_turbo-min) unless `LIBYUV_DISABLE_JPEG` is set (the
+  MJPEG sources are then left out too; they compile to nothing without
+  `HAVE_JPEG`). webrtc-min sets it: WebRTC doesn't use MJPEG.
   The LoongArch (lsx/lasx) targets are left out.
 - **Apple** (commit "Disable SME on Apple targets"): `libyuv_sme` is built
   only for Android/Linux arm64, so for Apple targets `libyuv_config` also
